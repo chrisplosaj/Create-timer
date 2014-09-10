@@ -72,25 +72,30 @@ function App() {
         //get difference from launch date (declared in head in index.html)
         var diff = date.getTime() - now.getTime();
 
+        var dtDate1 = "2014-09-12 16:00:00"
+        var dtDate2 = dtDate1.replace(/-/g,'/')
+        var nDifference = Math.abs(new Date() - new Date(dtDate2));
+        
+
         //change multisecond result to seconds, minutes, hours and days
         var tmp = diff / 1000;
-        var seconds = Math.floor(tmp % 60);
+        var seconds = Math.floor((nDifference / 1000) % 60);
         tmp /= 60;
-        var minutes = Math.floor(tmp % 60);
+        var minutes = Math.floor((nDifference / 60000) % 60);
         tmp /= 60;
-        var hours = Math.floor(tmp % 24);
+        var hours = Math.floor((nDifference / 3600000) % 24);
         tmp /= 24;
-        var days = Math.floor(tmp);
+        var days = Math.floor(nDifference / 86400000);
 
         //render in text
         $("#days .number").html(days);
-        $("#hours .number").html(hours - 8);
+        $("#hours .number").html(hours);
         $("#minutes .number").html(minutes);
         $("#seconds .number").html(seconds);
 
         //prepare new data for charts
-        var daysData    = [['a', 2 - days], ['b', days]];
-        var hoursData   = [['a', 24  - hours], ['b', hours]];
+        var daysData    = [['a', 7 - days], ['b', days]];
+        var hoursData   = [['a', 48  - hours], ['b', hours]];
         var minutesData = [['a', 60 - minutes], ['b', minutes]];
         var secondsData = [['a', 60 - seconds], ['b', seconds]];
 
